@@ -1,0 +1,82 @@
+# import * from './generated/prisma.graphql'
+
+enum PostOrderByInput {
+  description_ASC
+  description_DESC
+  url_ASC
+  url_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+enum Permission { 
+  ADMIN
+  USER
+}
+
+enum PostTypes {
+  THINKING
+  BUSINESS
+  SCIENCE
+  INVESTING
+}
+
+type SuccessMessage {
+  message: String
+}
+
+
+type Query {
+  info: String!
+  feed(filter: String, skip: Int, first: Int, orderBy: PostOrderByInput): Feed!
+  me: User
+  post(where: PostWhereUniqueInput!): Post
+  posts(filter: String): [Post]!
+}
+
+type Mutation {
+  createPost(description: String!, title: String!, types: String!): Post!
+  signup(email: String!, password: String!, name: String!, permissions: String): AuthPayload
+  login(email: String!, password: String!, permissions: String): AuthPayload
+  signout: SuccessMessage
+  vote(postId: ID!): Vote
+}
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  posts: [Post!]!
+  permissions: [Permission!]!
+}
+
+type Subscription {
+  newPost: Post
+  newVote: Vote
+}
+
+type AuthPayload {
+  token: String
+  user: User
+}
+
+type Post {
+  id: ID!
+  description: String!
+  url: String
+  postedBy: User
+  title: String!
+  votes: [Vote!]!
+  types: [PostTypes!]!
+}
+
+type Vote {
+  id: ID!
+  post: Post!
+  user: User!
+}
+
+type Feed {
+  post: [Post!]!
+  count: Int!
+}
