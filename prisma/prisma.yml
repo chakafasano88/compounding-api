@@ -1,6 +1,7 @@
 # The HTTP endpoint for your Prisma API
 #endpoint: ''
-endpoint: ${env:PRISMA_ENDPOINT}
+#endpoint: ${env:PRISMA_ENDPOINT}
+endpoint: https://compounding-c4fbfb5f8e.herokuapp.com/compounding-prod/prod
 
 # Points to the file that contains your datamodel
 datamodel: datamodel.prisma
