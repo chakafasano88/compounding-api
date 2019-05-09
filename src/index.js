@@ -57,10 +57,10 @@ server.use(bodyParser.json({limit: '50mb'}));
 server.use(bodyParser.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}));
 
 server.start({
-  cors: {
-    credentials: true,
-    origin: process.env.FRONTEND_URL
-  }
+  // cors: {
+  //   credentials: true,
+  //   origin: process.env.FRONTEND_URL
+  // }
 },
   (details) => console.log(`Server is running on http://localhost:${details.port}`)
 )
