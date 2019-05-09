@@ -1,6 +1,6 @@
 # The HTTP endpoint for your Prisma API
 
-endpoint: https://eu1.prisma.sh/matthew-fasano-c62c3d/compounding/dev
+endpoint: https://compounding-c4fbfb5f8e.herokuapp.com/compounding-prod/prod
 # endpoint: https://compounding-c4fbfb5f8e.herokuapp.com/compounding-prod/prod
 # secret: ${env:PRISMA_SECRET}
 secret: asdhaisdhviaosceoaoui321403hvqe0w
