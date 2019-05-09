@@ -58,7 +58,7 @@ server.start(
   {
     cors: {
       credentials: true,
-      origin: "https://compounding-react-prod.herokuapp.com/'",
+      origin: "https://compounding-react-prod.herokuapp.com/",
     },
   },
   details => {
