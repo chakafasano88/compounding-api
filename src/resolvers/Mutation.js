@@ -23,7 +23,7 @@ const Mutations = {
 
   async login(parent, args, ctx, info) {
 
-    const user = await ctx.db.query.user({data: {where: { email: args.email }}})
+    const user = await ctx.db.query.user({where: { email: args.email }})
     if (!user) {
       throw new Error('No such user found')
     }
