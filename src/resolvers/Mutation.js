@@ -7,8 +7,8 @@ const Mutations = {
   async signup(parent, args, ctx, info) {
 
     const password = await bcrypt.hash(args.password, 10)
-    
-    const user = await ctx.db.mutation.createUser({data: { ...args, password, permissions: { set: ['USER'] } }});
+
+    const user = await ctx.db.mutation.createUser({ data: { ...args, password, permissions: { set: ['USER'] } } });
 
     const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET)
 
@@ -16,16 +16,16 @@ const Mutations = {
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year cookie
     });
-    
-    return { token, user}
-    
+
+    return { token, user }
+
   },
 
   async login(parent, args, ctx, info) {
 
-    const user = await ctx.db.query.user({where: { email: args.email }})
+    const user = await ctx.db.query.user({ where: { email: args.email } })
     if (!user) {
-      throw new Error('No such user found')
+      throw new Error('No user found for the supplied email address');
     }
 
     const valid = await bcrypt.compare(args.password, user.password)
@@ -33,12 +33,12 @@ const Mutations = {
       throw new Error('Invalid password')
     }
     const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET)
-    
+
     ctx.response.cookie('token', token, {
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year cookie
     });
-    
+
     return {
       token,
       user,
@@ -57,13 +57,13 @@ const Mutations = {
     };
 
     return ctx.db.mutation.createPost({
-        data: {
-          url: args.url,
-          description: args.description,
-          title: args.title,
-          types: { set: [args.types] },
-          postedBy: { 
-            connect: { id: ctx.request.userId } 
+      data: {
+        url: args.url,
+        description: args.description,
+        title: args.title,
+        types: { set: [args.types] },
+        postedBy: {
+          connect: { id: ctx.request.userId }
         },
       }
     }, info)
@@ -82,8 +82,10 @@ const Mutations = {
     }
 
     return ctx.db.mutation.createVote({
-      user: { connect: { id: userId } },
-      post: { connect: { id: args.postId } },
+      data: {
+        user: { connect: { id: userId } },
+        post: { connect: { id: args.postId } },
+      }
     })
   }
 }
