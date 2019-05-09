@@ -8,7 +8,7 @@ const Mutations = {
 
     const password = await bcrypt.hash(args.password, 10)
     
-    const user = await ctx.db.mutation.createUser({ ...args, password, permissions: {set: ['USER']} });
+    const user = await ctx.db.mutation.createUser({data: { ...args, password, permissions: {set: ['USER']} }});
 
     const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET)
 
@@ -23,7 +23,7 @@ const Mutations = {
 
   async login(parent, args, ctx, info) {
 
-    const user = await ctx.db.query.user({where: { email: args.email }})
+    const user = await ctx.db.query.user({data: {where: { email: args.email }}})
     if (!user) {
       throw new Error('No such user found')
     }
