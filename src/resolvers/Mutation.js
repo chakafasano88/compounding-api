@@ -9,6 +9,7 @@ const Mutations = {
     const password = await bcrypt.hash(args.password, 10)
     
     const user = await ctx.db.mutation.createUser({data: { ...args, password, permissions: { set: ['USER'] } }});
+    console.log("reg", process.env.APP_SECRET)
 
     const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET)
 
@@ -32,6 +33,8 @@ const Mutations = {
     if (!valid) {
       throw new Error('Invalid password')
     }
+
+    console.log("login", process.env.APP_SECRET)
 
     const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET)
     
