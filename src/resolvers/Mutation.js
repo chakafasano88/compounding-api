@@ -33,9 +33,7 @@ const Mutations = {
       throw new Error('Invalid password')
     }
     const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET)
-
-      console.log("REQ", ctx.response.cookie)
-
+    
     ctx.response.cookie('token', token, {
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year cookie
@@ -57,8 +55,6 @@ const Mutations = {
     if (!ctx.request.userId) {
       throw new Error('You must be logged in!');
     };
-
-    console.log("ARGS", args)
 
     return ctx.db.mutation.createPost({
         data: {

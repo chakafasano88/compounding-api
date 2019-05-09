@@ -30,13 +30,17 @@ const server = new GraphQLServer({
 
 server.express.use(cookieParser());
 
-// decode the JWT so we can get the user Id on each request
+// start
 server.express.use((req, res, next) => {
+
   const { token } = req.cookies;
+
   if (token) {
     const { userId } = jwt.verify(token, process.env.APP_SECRET);
     // put the userId onto the req for future requests to access
     req.userId = userId;
+        console.log("TOKEN 1", req.userId)
+
   }
   next();
 });
@@ -45,6 +49,8 @@ server.express.use((req, res, next) => {
 
 server.express.use(async (req, res, next) => {
   // if they aren't logged in, skip this
+    console.log("TOKEN 2", req.userId)
+
   if (!req.userId) return next();
   const user = await db.query.user(
     { where: { id: req.userId } },
@@ -54,21 +60,13 @@ server.express.use(async (req, res, next) => {
   next();
 });
 
-// app.use(function(req, res, next) {
-//     res.header("Access-Control-Allow-Origin", '*');
-//     res.header("Access-Control-Allow-Credentials", true);
-//     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-//     res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
-//     next();
-// });
-
 server.start(
-  // {
-  //   cors: {
-  //     credentials: true,
-  //     origin: "https://compounding-react-prod.herokuapp.com/",
-  //   },
-  // },
+  {
+    cors: {
+      credentials: true,
+      origin: process.env.FRONTEND_URL,
+    },
+  },
   details => {
     console.log(`Server is now running on port http://localhost:${details.port}`);
   }
