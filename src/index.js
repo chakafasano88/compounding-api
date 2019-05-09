@@ -30,7 +30,7 @@ const server = new GraphQLServer({
 
 server.express.use(cookieParser());
 
-// start
+// start it
 server.express.use((req, res, next) => {
 
   const { token } = req.cookies;
