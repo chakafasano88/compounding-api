@@ -431,6 +431,8 @@ type User {
   name: String!
   email: String!
   password: String!
+  resetToken: String
+  resetTokenExpiry: Float
   permissions: [Permission!]!
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
   votes(where: VoteWhereInput, orderBy: VoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Vote!]
@@ -447,6 +449,8 @@ input UserCreateInput {
   name: String!
   email: String!
   password: String!
+  resetToken: String
+  resetTokenExpiry: Float
   permissions: UserCreatepermissionsInput
   posts: PostCreateManyWithoutPostedByInput
   votes: VoteCreateManyWithoutUserInput
@@ -471,6 +475,8 @@ input UserCreateWithoutPostsInput {
   name: String!
   email: String!
   password: String!
+  resetToken: String
+  resetTokenExpiry: Float
   permissions: UserCreatepermissionsInput
   votes: VoteCreateManyWithoutUserInput
 }
@@ -480,6 +486,8 @@ input UserCreateWithoutVotesInput {
   name: String!
   email: String!
   password: String!
+  resetToken: String
+  resetTokenExpiry: Float
   permissions: UserCreatepermissionsInput
   posts: PostCreateManyWithoutPostedByInput
 }
@@ -498,6 +506,10 @@ enum UserOrderByInput {
   email_DESC
   password_ASC
   password_DESC
+  resetToken_ASC
+  resetToken_DESC
+  resetTokenExpiry_ASC
+  resetTokenExpiry_DESC
 }
 
 type UserPreviousValues {
@@ -505,6 +517,8 @@ type UserPreviousValues {
   name: String!
   email: String!
   password: String!
+  resetToken: String
+  resetTokenExpiry: Float
   permissions: [Permission!]!
 }
 
@@ -530,6 +544,8 @@ input UserUpdateInput {
   name: String
   email: String
   password: String
+  resetToken: String
+  resetTokenExpiry: Float
   permissions: UserUpdatepermissionsInput
   posts: PostUpdateManyWithoutPostedByInput
   votes: VoteUpdateManyWithoutUserInput
@@ -539,6 +555,8 @@ input UserUpdateManyMutationInput {
   name: String
   email: String
   password: String
+  resetToken: String
+  resetTokenExpiry: Float
   permissions: UserUpdatepermissionsInput
 }
 
@@ -566,6 +584,8 @@ input UserUpdateWithoutPostsDataInput {
   name: String
   email: String
   password: String
+  resetToken: String
+  resetTokenExpiry: Float
   permissions: UserUpdatepermissionsInput
   votes: VoteUpdateManyWithoutUserInput
 }
@@ -574,6 +594,8 @@ input UserUpdateWithoutVotesDataInput {
   name: String
   email: String
   password: String
+  resetToken: String
+  resetTokenExpiry: Float
   permissions: UserUpdatepermissionsInput
   posts: PostUpdateManyWithoutPostedByInput
 }
@@ -645,6 +667,28 @@ input UserWhereInput {
   password_not_starts_with: String
   password_ends_with: String
   password_not_ends_with: String
+  resetToken: String
+  resetToken_not: String
+  resetToken_in: [String!]
+  resetToken_not_in: [String!]
+  resetToken_lt: String
+  resetToken_lte: String
+  resetToken_gt: String
+  resetToken_gte: String
+  resetToken_contains: String
+  resetToken_not_contains: String
+  resetToken_starts_with: String
+  resetToken_not_starts_with: String
+  resetToken_ends_with: String
+  resetToken_not_ends_with: String
+  resetTokenExpiry: Float
+  resetTokenExpiry_not: Float
+  resetTokenExpiry_in: [Float!]
+  resetTokenExpiry_not_in: [Float!]
+  resetTokenExpiry_lt: Float
+  resetTokenExpiry_lte: Float
+  resetTokenExpiry_gt: Float
+  resetTokenExpiry_gte: Float
   posts_every: PostWhereInput
   posts_some: PostWhereInput
   posts_none: PostWhereInput

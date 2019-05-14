@@ -1,6 +1,9 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const { promisify } = require('util');
+const { randomBytes } = require('crypto');
 const { getUserId } = require('../utils')
+const { transport, createEmail } = require('../mail');
 
 const Mutations = {
 
@@ -44,10 +47,71 @@ const Mutations = {
       user,
     }
   },
+  
 
   signout(parent, args, ctx, info) {
     ctx.response.clearCookie('token');
     return { message: 'Goodbye!' };
+  },
+
+  async requestReset(parents, args, ctx, info){
+    const user = await ctx.db.query.user({ where: { email: args.email } });
+
+    if (!user) {
+      throw new Error(`No such user found for email ${args.email}`);
+    }
+
+    const randomBytesPromiseified = promisify(randomBytes);
+    const resetToken = (await randomBytesPromiseified(20)).toString('hex');
+    const resetTokenExpiry = Date.now() + 3600000; // 1 hour from now
+
+    const res = await ctx.db.mutation.updateUser({
+      where: { email: args.email },
+      data: { resetToken, resetTokenExpiry },
+    });
+
+    const mailRes = await transport.sendMail({
+      from: 'support@focusgroup.com',
+      to: user.email,
+      subject: 'Your Password Reset Token',
+      html: createEmail(`Your Password Reset Token is here!
+      \n\n
+      <a href="${process.env.FRONTEND_URL}/forgot?resetToken=${resetToken}">Click Here to Reset</a>`),
+    });
+
+    return { message: 'Thanks!' };
+  },
+
+  async resetPassword(parent, args, ctx, info) {
+    if(args.password !== args.confirmPassword) {
+      throw new Error('Your passwords do not match!')
+    }
+
+    const [user] = ctx.db.query.users({ 
+      where: { 
+        resetToken: args.resetToken, 
+        resetTokenExpiry_gte: Date.now - 3600000 } 
+      });
+
+      if(!user) {
+        throw new Error('This token is either invalid or expired');
+      }
+
+      const password = await bcrpty.hash(args.password, 10);
+
+      const updatedUsser = await ctx.db.mutation.updateUser({
+        where: user.email,
+        data: { password, resetToken: null, resetTokenExpiry: null }
+      })
+
+      const token = jwt.sign({ user_id: uodatedUser.id }, process.env.APP_SECRET);
+
+      ctx.response.cookie('token', token, {
+        httpOnly: true,
+        maxAge: 1000 * 60 * 60 * 24 * 365,
+      });
+
+      return updatedUsser;
   },
 
   createPost(parent, args, ctx, info) {
