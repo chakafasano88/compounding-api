@@ -134,24 +134,42 @@ const Mutations = {
   },
 
 
-  async vote(parent, args, ctx, info) {
-    const userId = getUserId(ctx)
+  async createVote(parent, args, ctx, info) {
 
-    const postExists = await ctx.db.mutation.$exists.vote({
-      user: { id: userId },
-      post: { id: args.postId },
-    })
-    if (postExists) {
-      throw new Error(`Already voted for post: ${args.postId}`)
+    if(!ctx.request.userId) {
+      throw new Error(`You must have an account to do that!`)
+    }
+
+    const voteExists = await ctx.db.query.votes({ where: { post: { id: args.postId }, user: { id: ctx.request.userId } } });
+
+    if (voteExists.length) {
+      ctx.db.mutation.deleteVote({ where: { id: voteExists[0].id } });
+      return;
     }
 
     return ctx.db.mutation.createVote({
       data: {
-        user: { connect: { id: userId } },
+        user: { connect: { id: ctx.request.userId } },
         post: { connect: { id: args.postId } },
       }
-    })
+    }, info)
+  },
+
+  async createComment(parent, args, ctx, info) {
+
+    if(!ctx.request.userId) {
+      throw new Error(`You must be logged in to do that!`)
+    }
+
+    return ctx.db.mutation.createComment({
+      data: {
+        description: args.description,
+        user: { connect: { id: ctx.request.userId } },
+        post: { connect: { id: args.postId } },
+      }
+    }, info)
   }
+
 }
 
 module.exports = Mutations;

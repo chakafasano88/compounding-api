@@ -18,6 +18,7 @@ type Post {
   title: String!
   postedBy: User
   votes: [Vote!]!
+  comments: [Comment!]!
   types: [PostTypes!]! @scalarList(strategy: RELATION)
 }
 
@@ -35,7 +36,15 @@ type User {
 
 type Vote {
   id: ID! @id
-  post: Post!
-  user: User!
+  post: Post! @unique
+  user: User! @unique
+  createdAt: DateTime! @createdAt
+}
+
+type Comment {
+  id: ID! @id
+  description: String!
+  post: Post! @unique
+  user: User! @unique
 }
 

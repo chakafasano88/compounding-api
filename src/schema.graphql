@@ -31,16 +31,20 @@ type Query {
   me: User
   post(where: PostWhereUniqueInput!): Post
   posts(filter: String): [Post]!
+  vote(where: VoteWhereUniqueInput!): Vote
 }
 
 type Mutation {
   createPost(description: String!, title: String!, types: String!): Post!
+  createComment(postId: ID!, description: String!): Comment
+  createVote(postId: ID!): Vote
+  deleteVote(where: VoteWhereUniqueInput!): Vote
   requestReset(email: String!): SuccessMessage
   resetPassword(resetToken: String!, password: String!, confirmPassword: String!): User!
   signup(email: String!, password: String!, name: String!, permissions: String): AuthPayload
   login(email: String!, password: String!, permissions: String): AuthPayload
   signout: SuccessMessage
-  vote(postId: ID!): Vote
+  
 }
 
 type User {
@@ -68,11 +72,19 @@ type Post {
   postedBy: User
   title: String!
   votes: [Vote!]!
+  comments: [Comment!]!
   types: [PostTypes!]!
 }
 
 type Vote {
   id: ID!
+  post: Post!
+  user: User!
+}
+
+type Comment {
+  id: ID!
+  description: String!
   post: Post!
   user: User!
 }

@@ -51,16 +51,21 @@ const Query = {
     if(!posts) {
       throw new Error('Error getting posts.');
     }
-
     return posts.filter((post, i) => (post.types[0] === args.filter));
-    
   },
   
   async post(parent, args, ctx, info) {
     const post = await ctx.db.query.post({ where: { id: args.where.id }}, info);
     
     return post;
+  },
+
+  async vote(parent, args, ctx, info) {
+    const vote = await ctx.db.query.vote({ where: { id: args.where.id }}, info);
+    
+    return vote;
   }
+
 }
 
 module.exports = Query;
