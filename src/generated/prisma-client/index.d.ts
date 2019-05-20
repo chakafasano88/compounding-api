@@ -253,6 +253,10 @@ export type UserOrderByInput =
   | "email_DESC"
   | "password_ASC"
   | "password_DESC"
+  | "inviteToken_ASC"
+  | "inviteToken_DESC"
+  | "inviteTokenExpiry_ASC"
+  | "inviteTokenExpiry_DESC"
   | "resetToken_ASC"
   | "resetToken_DESC"
   | "resetTokenExpiry_ASC"
@@ -469,6 +473,8 @@ export interface UserCreateWithoutVotesInput {
   lastName: String;
   email: String;
   password: String;
+  inviteToken?: Maybe<String>;
+  inviteTokenExpiry?: Maybe<Float>;
   resetToken?: Maybe<String>;
   resetTokenExpiry?: Maybe<Float>;
   permissions?: Maybe<UserCreatepermissionsInput>;
@@ -480,6 +486,8 @@ export interface UserUpdateInput {
   lastName?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
+  inviteToken?: Maybe<String>;
+  inviteTokenExpiry?: Maybe<Float>;
   resetToken?: Maybe<String>;
   resetTokenExpiry?: Maybe<Float>;
   permissions?: Maybe<UserUpdatepermissionsInput>;
@@ -554,6 +562,8 @@ export interface UserUpdateWithoutPostsDataInput {
   lastName?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
+  inviteToken?: Maybe<String>;
+  inviteTokenExpiry?: Maybe<Float>;
   resetToken?: Maybe<String>;
   resetTokenExpiry?: Maybe<Float>;
   permissions?: Maybe<UserUpdatepermissionsInput>;
@@ -697,6 +707,28 @@ export interface UserWhereInput {
   password_not_starts_with?: Maybe<String>;
   password_ends_with?: Maybe<String>;
   password_not_ends_with?: Maybe<String>;
+  inviteToken?: Maybe<String>;
+  inviteToken_not?: Maybe<String>;
+  inviteToken_in?: Maybe<String[] | String>;
+  inviteToken_not_in?: Maybe<String[] | String>;
+  inviteToken_lt?: Maybe<String>;
+  inviteToken_lte?: Maybe<String>;
+  inviteToken_gt?: Maybe<String>;
+  inviteToken_gte?: Maybe<String>;
+  inviteToken_contains?: Maybe<String>;
+  inviteToken_not_contains?: Maybe<String>;
+  inviteToken_starts_with?: Maybe<String>;
+  inviteToken_not_starts_with?: Maybe<String>;
+  inviteToken_ends_with?: Maybe<String>;
+  inviteToken_not_ends_with?: Maybe<String>;
+  inviteTokenExpiry?: Maybe<Float>;
+  inviteTokenExpiry_not?: Maybe<Float>;
+  inviteTokenExpiry_in?: Maybe<Float[] | Float>;
+  inviteTokenExpiry_not_in?: Maybe<Float[] | Float>;
+  inviteTokenExpiry_lt?: Maybe<Float>;
+  inviteTokenExpiry_lte?: Maybe<Float>;
+  inviteTokenExpiry_gt?: Maybe<Float>;
+  inviteTokenExpiry_gte?: Maybe<Float>;
   resetToken?: Maybe<String>;
   resetToken_not?: Maybe<String>;
   resetToken_in?: Maybe<String[] | String>;
@@ -782,6 +814,8 @@ export interface UserCreateWithoutPostsInput {
   lastName: String;
   email: String;
   password: String;
+  inviteToken?: Maybe<String>;
+  inviteTokenExpiry?: Maybe<Float>;
   resetToken?: Maybe<String>;
   resetTokenExpiry?: Maybe<Float>;
   permissions?: Maybe<UserCreatepermissionsInput>;
@@ -885,6 +919,8 @@ export interface UserUpdateDataInput {
   lastName?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
+  inviteToken?: Maybe<String>;
+  inviteTokenExpiry?: Maybe<Float>;
   resetToken?: Maybe<String>;
   resetTokenExpiry?: Maybe<Float>;
   permissions?: Maybe<UserUpdatepermissionsInput>;
@@ -1008,6 +1044,8 @@ export interface UserCreateInput {
   lastName: String;
   email: String;
   password: String;
+  inviteToken?: Maybe<String>;
+  inviteTokenExpiry?: Maybe<Float>;
   resetToken?: Maybe<String>;
   resetTokenExpiry?: Maybe<Float>;
   permissions?: Maybe<UserCreatepermissionsInput>;
@@ -1020,6 +1058,8 @@ export interface UserUpdateWithoutVotesDataInput {
   lastName?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
+  inviteToken?: Maybe<String>;
+  inviteTokenExpiry?: Maybe<Float>;
   resetToken?: Maybe<String>;
   resetTokenExpiry?: Maybe<Float>;
   permissions?: Maybe<UserUpdatepermissionsInput>;
@@ -1031,6 +1071,8 @@ export interface UserUpdateManyMutationInput {
   lastName?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
+  inviteToken?: Maybe<String>;
+  inviteTokenExpiry?: Maybe<Float>;
   resetToken?: Maybe<String>;
   resetTokenExpiry?: Maybe<Float>;
   permissions?: Maybe<UserUpdatepermissionsInput>;
@@ -1315,6 +1357,8 @@ export interface UserPreviousValues {
   lastName: String;
   email: String;
   password: String;
+  inviteToken?: String;
+  inviteTokenExpiry?: Float;
   resetToken?: String;
   resetTokenExpiry?: Float;
   permissions: Permission[];
@@ -1328,6 +1372,8 @@ export interface UserPreviousValuesPromise
   lastName: () => Promise<String>;
   email: () => Promise<String>;
   password: () => Promise<String>;
+  inviteToken: () => Promise<String>;
+  inviteTokenExpiry: () => Promise<Float>;
   resetToken: () => Promise<String>;
   resetTokenExpiry: () => Promise<Float>;
   permissions: () => Promise<Permission[]>;
@@ -1341,6 +1387,8 @@ export interface UserPreviousValuesSubscription
   lastName: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
+  inviteToken: () => Promise<AsyncIterator<String>>;
+  inviteTokenExpiry: () => Promise<AsyncIterator<Float>>;
   resetToken: () => Promise<AsyncIterator<String>>;
   resetTokenExpiry: () => Promise<AsyncIterator<Float>>;
   permissions: () => Promise<AsyncIterator<Permission[]>>;
@@ -1546,6 +1594,8 @@ export interface User {
   lastName: String;
   email: String;
   password: String;
+  inviteToken?: String;
+  inviteTokenExpiry?: Float;
   resetToken?: String;
   resetTokenExpiry?: Float;
   permissions: Permission[];
@@ -1557,6 +1607,8 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   lastName: () => Promise<String>;
   email: () => Promise<String>;
   password: () => Promise<String>;
+  inviteToken: () => Promise<String>;
+  inviteTokenExpiry: () => Promise<Float>;
   resetToken: () => Promise<String>;
   resetTokenExpiry: () => Promise<Float>;
   permissions: () => Promise<Permission[]>;
@@ -1588,6 +1640,8 @@ export interface UserSubscription
   lastName: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
+  inviteToken: () => Promise<AsyncIterator<String>>;
+  inviteTokenExpiry: () => Promise<AsyncIterator<Float>>;
   resetToken: () => Promise<AsyncIterator<String>>;
   resetTokenExpiry: () => Promise<AsyncIterator<Float>>;
   permissions: () => Promise<AsyncIterator<Permission[]>>;
@@ -1619,6 +1673,8 @@ export interface UserNullablePromise
   lastName: () => Promise<String>;
   email: () => Promise<String>;
   password: () => Promise<String>;
+  inviteToken: () => Promise<String>;
+  inviteTokenExpiry: () => Promise<Float>;
   resetToken: () => Promise<String>;
   resetTokenExpiry: () => Promise<Float>;
   permissions: () => Promise<Permission[]>;

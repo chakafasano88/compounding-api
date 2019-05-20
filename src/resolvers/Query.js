@@ -38,6 +38,15 @@ const Query = {
    
     return user
   },
+
+  async users(parent, args, ctx, info) {
+    // 1. Check if they are logged in
+    if (!ctx.request.userId) {
+      throw new Error('You must be logged in!');
+    }
+    
+    return ctx.db.query.users({}, info);
+  },
   
   async posts(parent, args, ctx, info) {
     const where = args.filter ? {

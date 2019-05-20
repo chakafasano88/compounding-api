@@ -10,6 +10,7 @@ enum PostOrderByInput {
 }
 
 enum Permission { 
+  SUPER_ADMIN
   ADMIN
   USER
 }
@@ -31,6 +32,7 @@ type Query {
   me: User
   post(where: PostWhereUniqueInput!): Post
   posts(filter: String): [Post]!
+  users: [User]!
   vote(where: VoteWhereUniqueInput!): Vote
 }
 
@@ -42,6 +44,7 @@ type Mutation {
   requestReset(email: String!): SuccessMessage
   resetPassword(resetToken: String!, password: String!, confirmPassword: String!): User!
   signup(email: String!, confirmPassword: String!, password: String!, firstName: String!, lastName: String!, permissions: String): AuthPayload
+  createUser(firstName: String!, lastName: String!, email: String! permissions: String!): User!
   login(email: String!, password: String!, permissions: String): AuthPayload
   signout: SuccessMessage
   

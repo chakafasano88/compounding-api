@@ -679,6 +679,8 @@ type User {
   lastName: String!
   email: String!
   password: String!
+  inviteToken: String
+  inviteTokenExpiry: Float
   resetToken: String
   resetTokenExpiry: Float
   permissions: [Permission!]!
@@ -698,6 +700,8 @@ input UserCreateInput {
   lastName: String!
   email: String!
   password: String!
+  inviteToken: String
+  inviteTokenExpiry: Float
   resetToken: String
   resetTokenExpiry: Float
   permissions: UserCreatepermissionsInput
@@ -730,6 +734,8 @@ input UserCreateWithoutPostsInput {
   lastName: String!
   email: String!
   password: String!
+  inviteToken: String
+  inviteTokenExpiry: Float
   resetToken: String
   resetTokenExpiry: Float
   permissions: UserCreatepermissionsInput
@@ -742,6 +748,8 @@ input UserCreateWithoutVotesInput {
   lastName: String!
   email: String!
   password: String!
+  inviteToken: String
+  inviteTokenExpiry: Float
   resetToken: String
   resetTokenExpiry: Float
   permissions: UserCreatepermissionsInput
@@ -764,6 +772,10 @@ enum UserOrderByInput {
   email_DESC
   password_ASC
   password_DESC
+  inviteToken_ASC
+  inviteToken_DESC
+  inviteTokenExpiry_ASC
+  inviteTokenExpiry_DESC
   resetToken_ASC
   resetToken_DESC
   resetTokenExpiry_ASC
@@ -776,6 +788,8 @@ type UserPreviousValues {
   lastName: String!
   email: String!
   password: String!
+  inviteToken: String
+  inviteTokenExpiry: Float
   resetToken: String
   resetTokenExpiry: Float
   permissions: [Permission!]!
@@ -804,6 +818,8 @@ input UserUpdateDataInput {
   lastName: String
   email: String
   password: String
+  inviteToken: String
+  inviteTokenExpiry: Float
   resetToken: String
   resetTokenExpiry: Float
   permissions: UserUpdatepermissionsInput
@@ -816,6 +832,8 @@ input UserUpdateInput {
   lastName: String
   email: String
   password: String
+  inviteToken: String
+  inviteTokenExpiry: Float
   resetToken: String
   resetTokenExpiry: Float
   permissions: UserUpdatepermissionsInput
@@ -828,6 +846,8 @@ input UserUpdateManyMutationInput {
   lastName: String
   email: String
   password: String
+  inviteToken: String
+  inviteTokenExpiry: Float
   resetToken: String
   resetTokenExpiry: Float
   permissions: UserUpdatepermissionsInput
@@ -865,6 +885,8 @@ input UserUpdateWithoutPostsDataInput {
   lastName: String
   email: String
   password: String
+  inviteToken: String
+  inviteTokenExpiry: Float
   resetToken: String
   resetTokenExpiry: Float
   permissions: UserUpdatepermissionsInput
@@ -876,6 +898,8 @@ input UserUpdateWithoutVotesDataInput {
   lastName: String
   email: String
   password: String
+  inviteToken: String
+  inviteTokenExpiry: Float
   resetToken: String
   resetTokenExpiry: Float
   permissions: UserUpdatepermissionsInput
@@ -968,6 +992,28 @@ input UserWhereInput {
   password_not_starts_with: String
   password_ends_with: String
   password_not_ends_with: String
+  inviteToken: String
+  inviteToken_not: String
+  inviteToken_in: [String!]
+  inviteToken_not_in: [String!]
+  inviteToken_lt: String
+  inviteToken_lte: String
+  inviteToken_gt: String
+  inviteToken_gte: String
+  inviteToken_contains: String
+  inviteToken_not_contains: String
+  inviteToken_starts_with: String
+  inviteToken_not_starts_with: String
+  inviteToken_ends_with: String
+  inviteToken_not_ends_with: String
+  inviteTokenExpiry: Float
+  inviteTokenExpiry_not: Float
+  inviteTokenExpiry_in: [Float!]
+  inviteTokenExpiry_not_in: [Float!]
+  inviteTokenExpiry_lt: Float
+  inviteTokenExpiry_lte: Float
+  inviteTokenExpiry_gt: Float
+  inviteTokenExpiry_gte: Float
   resetToken: String
   resetToken_not: String
   resetToken_in: [String!]

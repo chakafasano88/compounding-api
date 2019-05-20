@@ -28,6 +28,8 @@ type User {
   lastName: String!
   email: String! @unique
   password: String!
+  inviteToken: String
+  inviteTokenExpiry: Float
   resetToken: String
   resetTokenExpiry: Float
   permissions: [Permission] @scalarList(strategy: RELATION) 
