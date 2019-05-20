@@ -9,7 +9,13 @@ const Mutations = {
 
   async signup(parent, args, ctx, info) {
 
-    const password = await bcrypt.hash(args.password, 10)
+    if(args.confirmPassword !== args.password) {
+      throw new Error('Your passwords do not match');
+    }
+
+    delete args.confirmPassword; 
+
+    const password = await bcrypt.hash(args.password, 10);
 
     const user = await ctx.db.mutation.createUser({ data: { ...args, password, permissions: { set: ['USER'] } } });
 
