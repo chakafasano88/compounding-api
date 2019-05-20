@@ -245,8 +245,10 @@ export type PostTypes = "THINKING" | "BUSINESS" | "SCIENCE" | "INVESTING";
 export type UserOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "name_ASC"
-  | "name_DESC"
+  | "firstName_ASC"
+  | "firstName_DESC"
+  | "lastName_ASC"
+  | "lastName_DESC"
   | "email_ASC"
   | "email_DESC"
   | "password_ASC"
@@ -463,7 +465,8 @@ export interface VoteCreateInput {
 
 export interface UserCreateWithoutVotesInput {
   id?: Maybe<ID_Input>;
-  name: String;
+  firstName: String;
+  lastName: String;
   email: String;
   password: String;
   resetToken?: Maybe<String>;
@@ -473,7 +476,8 @@ export interface UserCreateWithoutVotesInput {
 }
 
 export interface UserUpdateInput {
-  name?: Maybe<String>;
+  firstName?: Maybe<String>;
+  lastName?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
   resetToken?: Maybe<String>;
@@ -546,7 +550,8 @@ export interface PostUpsertWithoutVotesInput {
 }
 
 export interface UserUpdateWithoutPostsDataInput {
-  name?: Maybe<String>;
+  firstName?: Maybe<String>;
+  lastName?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
   resetToken?: Maybe<String>;
@@ -636,20 +641,34 @@ export interface UserWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
+  firstName?: Maybe<String>;
+  firstName_not?: Maybe<String>;
+  firstName_in?: Maybe<String[] | String>;
+  firstName_not_in?: Maybe<String[] | String>;
+  firstName_lt?: Maybe<String>;
+  firstName_lte?: Maybe<String>;
+  firstName_gt?: Maybe<String>;
+  firstName_gte?: Maybe<String>;
+  firstName_contains?: Maybe<String>;
+  firstName_not_contains?: Maybe<String>;
+  firstName_starts_with?: Maybe<String>;
+  firstName_not_starts_with?: Maybe<String>;
+  firstName_ends_with?: Maybe<String>;
+  firstName_not_ends_with?: Maybe<String>;
+  lastName?: Maybe<String>;
+  lastName_not?: Maybe<String>;
+  lastName_in?: Maybe<String[] | String>;
+  lastName_not_in?: Maybe<String[] | String>;
+  lastName_lt?: Maybe<String>;
+  lastName_lte?: Maybe<String>;
+  lastName_gt?: Maybe<String>;
+  lastName_gte?: Maybe<String>;
+  lastName_contains?: Maybe<String>;
+  lastName_not_contains?: Maybe<String>;
+  lastName_starts_with?: Maybe<String>;
+  lastName_not_starts_with?: Maybe<String>;
+  lastName_ends_with?: Maybe<String>;
+  lastName_not_ends_with?: Maybe<String>;
   email?: Maybe<String>;
   email_not?: Maybe<String>;
   email_in?: Maybe<String[] | String>;
@@ -759,7 +778,8 @@ export interface CommentWhereInput {
 
 export interface UserCreateWithoutPostsInput {
   id?: Maybe<ID_Input>;
-  name: String;
+  firstName: String;
+  lastName: String;
   email: String;
   password: String;
   resetToken?: Maybe<String>;
@@ -861,7 +881,8 @@ export interface VoteUpdateInput {
 }
 
 export interface UserUpdateDataInput {
-  name?: Maybe<String>;
+  firstName?: Maybe<String>;
+  lastName?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
   resetToken?: Maybe<String>;
@@ -983,7 +1004,8 @@ export interface UserUpdateOneRequiredWithoutVotesInput {
 
 export interface UserCreateInput {
   id?: Maybe<ID_Input>;
-  name: String;
+  firstName: String;
+  lastName: String;
   email: String;
   password: String;
   resetToken?: Maybe<String>;
@@ -994,7 +1016,8 @@ export interface UserCreateInput {
 }
 
 export interface UserUpdateWithoutVotesDataInput {
-  name?: Maybe<String>;
+  firstName?: Maybe<String>;
+  lastName?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
   resetToken?: Maybe<String>;
@@ -1004,7 +1027,8 @@ export interface UserUpdateWithoutVotesDataInput {
 }
 
 export interface UserUpdateManyMutationInput {
-  name?: Maybe<String>;
+  firstName?: Maybe<String>;
+  lastName?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
   resetToken?: Maybe<String>;
@@ -1287,7 +1311,8 @@ export interface VoteEdgeSubscription
 
 export interface UserPreviousValues {
   id: ID_Output;
-  name: String;
+  firstName: String;
+  lastName: String;
   email: String;
   password: String;
   resetToken?: String;
@@ -1299,7 +1324,8 @@ export interface UserPreviousValuesPromise
   extends Promise<UserPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
+  firstName: () => Promise<String>;
+  lastName: () => Promise<String>;
   email: () => Promise<String>;
   password: () => Promise<String>;
   resetToken: () => Promise<String>;
@@ -1311,7 +1337,8 @@ export interface UserPreviousValuesSubscription
   extends Promise<AsyncIterator<UserPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
+  firstName: () => Promise<AsyncIterator<String>>;
+  lastName: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
   resetToken: () => Promise<AsyncIterator<String>>;
@@ -1515,7 +1542,8 @@ export interface PostNullablePromise
 
 export interface User {
   id: ID_Output;
-  name: String;
+  firstName: String;
+  lastName: String;
   email: String;
   password: String;
   resetToken?: String;
@@ -1525,7 +1553,8 @@ export interface User {
 
 export interface UserPromise extends Promise<User>, Fragmentable {
   id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
+  firstName: () => Promise<String>;
+  lastName: () => Promise<String>;
   email: () => Promise<String>;
   password: () => Promise<String>;
   resetToken: () => Promise<String>;
@@ -1555,7 +1584,8 @@ export interface UserSubscription
   extends Promise<AsyncIterator<User>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
+  firstName: () => Promise<AsyncIterator<String>>;
+  lastName: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
   resetToken: () => Promise<AsyncIterator<String>>;
@@ -1585,7 +1615,8 @@ export interface UserNullablePromise
   extends Promise<User | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
+  firstName: () => Promise<String>;
+  lastName: () => Promise<String>;
   email: () => Promise<String>;
   password: () => Promise<String>;
   resetToken: () => Promise<String>;
