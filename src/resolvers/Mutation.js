@@ -90,7 +90,7 @@ const Mutations = {
        <a href="${process.env.FRONTEND_URL}/forgot?resetToken=${resetToken}">Click Here to Reset</a>`,
     };
 
-    
+
     sgMail.send(mailRes);
 
     return { message: 'Thanks!' };
@@ -188,8 +188,43 @@ const Mutations = {
         post: { connect: { id: args.postId } },
       }
     }, info)
-  }
+  },
 
+  async createUser(parent, args, ctx, info) {
+
+    const userExists = await ctx.db.query.users({where: { email: args.email }});
+    console.log("user", args)
+    if(userExists.length > 0) {
+      throw new Error('A user with that email already exists!')
+    }
+
+    const password = await bcrypt.hash(args.password, 10);
+
+    const user = await ctx.db.mutation.createUser({ data: { ...args, password, permissions: { set: [args.permissions] } } });
+
+    const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET)
+
+    const randomBytesPromiseified = promisify(randomBytes);
+    const inviteToken = (await randomBytesPromiseified(20)).toString('hex');
+    const inviteTokenExpiry = Date.now() + 3600000; // 1 hour from now
+
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+    const mailRes = {
+      to: res.email,
+      from: 'support@focusgroup',
+      subject: 'Focus Group Invite',
+      text: 'Reset Password',
+      html: `<strong>Hello ${args.firstName}! You have been invited to be a collaborator of The Focus Group! Click the link below to get started! Welcome to the team</strong> 
+        \n\n
+       <a href="${process.env.FRONTEND_URL}/invite?inviteToken=${inviteToken}">Click Here to Reset</a>`,
+    };
+
+
+    sgMail.send(mailRes);
+
+    return { message: 'Thanks!' }
+  }
 }
 
 module.exports = Mutations;

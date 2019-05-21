@@ -44,7 +44,7 @@ type Mutation {
   requestReset(email: String!): SuccessMessage
   resetPassword(resetToken: String!, password: String!, confirmPassword: String!): User!
   signup(email: String!, confirmPassword: String!, password: String!, firstName: String!, lastName: String!, permissions: String): AuthPayload
-  createUser(firstName: String!, lastName: String!, email: String! permissions: String!): User!
+  createUser(firstName: String!, lastName: String!, email: String! permissions: String! password: String!): User!
   login(email: String!, password: String!, permissions: String): AuthPayload
   signout: SuccessMessage
   
