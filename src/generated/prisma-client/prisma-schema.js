@@ -258,6 +258,7 @@ type PageInfo {
 }
 
 enum Permission {
+  SUPER_ADMIN
   ADMIN
   USER
 }
@@ -686,6 +687,7 @@ type User {
   permissions: [Permission!]!
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
   votes(where: VoteWhereInput, orderBy: VoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Vote!]
+  status: Int
 }
 
 type UserConnection {
@@ -707,6 +709,7 @@ input UserCreateInput {
   permissions: UserCreatepermissionsInput
   posts: PostCreateManyWithoutPostedByInput
   votes: VoteCreateManyWithoutUserInput
+  status: Int
 }
 
 input UserCreateOneInput {
@@ -740,6 +743,7 @@ input UserCreateWithoutPostsInput {
   resetTokenExpiry: Float
   permissions: UserCreatepermissionsInput
   votes: VoteCreateManyWithoutUserInput
+  status: Int
 }
 
 input UserCreateWithoutVotesInput {
@@ -754,6 +758,7 @@ input UserCreateWithoutVotesInput {
   resetTokenExpiry: Float
   permissions: UserCreatepermissionsInput
   posts: PostCreateManyWithoutPostedByInput
+  status: Int
 }
 
 type UserEdge {
@@ -780,6 +785,8 @@ enum UserOrderByInput {
   resetToken_DESC
   resetTokenExpiry_ASC
   resetTokenExpiry_DESC
+  status_ASC
+  status_DESC
 }
 
 type UserPreviousValues {
@@ -793,6 +800,7 @@ type UserPreviousValues {
   resetToken: String
   resetTokenExpiry: Float
   permissions: [Permission!]!
+  status: Int
 }
 
 type UserSubscriptionPayload {
@@ -825,6 +833,7 @@ input UserUpdateDataInput {
   permissions: UserUpdatepermissionsInput
   posts: PostUpdateManyWithoutPostedByInput
   votes: VoteUpdateManyWithoutUserInput
+  status: Int
 }
 
 input UserUpdateInput {
@@ -839,6 +848,7 @@ input UserUpdateInput {
   permissions: UserUpdatepermissionsInput
   posts: PostUpdateManyWithoutPostedByInput
   votes: VoteUpdateManyWithoutUserInput
+  status: Int
 }
 
 input UserUpdateManyMutationInput {
@@ -851,6 +861,7 @@ input UserUpdateManyMutationInput {
   resetToken: String
   resetTokenExpiry: Float
   permissions: UserUpdatepermissionsInput
+  status: Int
 }
 
 input UserUpdateOneRequiredInput {
@@ -891,6 +902,7 @@ input UserUpdateWithoutPostsDataInput {
   resetTokenExpiry: Float
   permissions: UserUpdatepermissionsInput
   votes: VoteUpdateManyWithoutUserInput
+  status: Int
 }
 
 input UserUpdateWithoutVotesDataInput {
@@ -904,6 +916,7 @@ input UserUpdateWithoutVotesDataInput {
   resetTokenExpiry: Float
   permissions: UserUpdatepermissionsInput
   posts: PostUpdateManyWithoutPostedByInput
+  status: Int
 }
 
 input UserUpsertNestedInput {
@@ -1042,6 +1055,14 @@ input UserWhereInput {
   votes_every: VoteWhereInput
   votes_some: VoteWhereInput
   votes_none: VoteWhereInput
+  status: Int
+  status_not: Int
+  status_in: [Int!]
+  status_not_in: [Int!]
+  status_lt: Int
+  status_lte: Int
+  status_gt: Int
+  status_gte: Int
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

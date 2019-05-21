@@ -36,6 +36,7 @@ type User {
   permissions: [Permission] @scalarList(strategy: RELATION) 
   posts: [Post!]!
   votes: [Vote!]
+  status: Int
 }
 
 type Vote {

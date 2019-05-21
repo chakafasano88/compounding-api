@@ -16,6 +16,7 @@ const Mutations = {
     }
 
     delete args.confirmPassword;
+    args.status = 1;
 
     const password = await bcrypt.hash(args.password, 10);
 
@@ -35,8 +36,13 @@ const Mutations = {
   async login(parent, args, ctx, info) {
 
     const user = await ctx.db.query.user({ where: { email: args.email } })
+
     if (!user) {
       throw new Error('No user found for the supplied email address');
+    }
+
+    if(user.status === 0) {
+      throw new Error('This user has not been authenticated. Please check your email for an invite.');
     }
 
     const valid = await bcrypt.compare(args.password, user.password)
@@ -192,30 +198,34 @@ const Mutations = {
 
   async createUser(parent, args, ctx, info) {
 
-    const userExists = await ctx.db.query.users({where: { email: args.email }});
-    console.log("user", args)
+    const userExists = await ctx.db.query.users({ where: { email: args.email }});
+    
     if(userExists.length > 0) {
       throw new Error('A user with that email already exists!')
     }
 
+    args.status = 0;
+
     const password = await bcrypt.hash(args.password, 10);
-
     const user = await ctx.db.mutation.createUser({ data: { ...args, password, permissions: { set: [args.permissions] } } });
-
-    const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET)
 
     const randomBytesPromiseified = promisify(randomBytes);
     const inviteToken = (await randomBytesPromiseified(20)).toString('hex');
     const inviteTokenExpiry = Date.now() + 3600000; // 1 hour from now
+
+    const res = await ctx.db.mutation.updateUser({
+      where: { email: args.email },
+      data: { inviteToken, inviteTokenExpiry },
+    });
 
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
     const mailRes = {
       to: res.email,
       from: 'support@focusgroup',
-      subject: 'Focus Group Invite',
+      subject: 'FocusLoop Invite',
       text: 'Reset Password',
-      html: `<strong>Hello ${args.firstName}! You have been invited to be a collaborator of The Focus Group! Click the link below to get started! Welcome to the team</strong> 
+      html: `<strong>Hello ${args.firstName}! You have been invited to be a collaborator of The FocusLoop! Click the link below to get started! Welcome to the team</strong> 
         \n\n
        <a href="${process.env.FRONTEND_URL}/invite?inviteToken=${inviteToken}">Click Here to Reset</a>`,
     };
@@ -224,7 +234,55 @@ const Mutations = {
     sgMail.send(mailRes);
 
     return { message: 'Thanks!' }
+  },
+
+  async connectUser(parent, args, ctx, info) {
+
+    if (args.password !== args.confirmPassword) {
+      throw new Error('Your passwords do not match!')
+    }
+
+    delete args.confirmPassword;
+
+    const [user] = await ctx.db.query.users({
+      where: {
+        inviteToken: args.inviteToken,
+        inviteTokenExpiry_gte: Date.now - 3600000
+      }
+    }, '{ id, permissions, email }');
+
+    console.log("user", user)
+
+    if (!user) {
+      throw new Error('This token is either invalid or expired');
+    }
+
+    const password = await bcrypt.hash(args.password, 10);
+
+    args.status = 1;
+
+    const updatedUser = await ctx.db.mutation.updateUser({
+      where: { email: user.email },
+      data: {
+        ...args,
+        password,
+        permissions: { set: [user.permissions[0]] },
+        resetToken: null,
+        resetTokenExpiry: null,
+      },
+    });
+
+    const token = jwt.sign({ userId: updatedUser.id }, process.env.APP_SECRET);
+
+    ctx.response.cookie('token', token, {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 365,
+    });
+
+    return updatedUser
   }
+
+
 }
 
 module.exports = Mutations;
