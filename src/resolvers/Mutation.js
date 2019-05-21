@@ -41,7 +41,7 @@ const Mutations = {
       throw new Error('No user found for the supplied email address');
     }
 
-    if(user.status === 0) {
+    if(!user.status) {
       throw new Error('This user has not been authenticated. Please check your email for an invite.');
     }
 
