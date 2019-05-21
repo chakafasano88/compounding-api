@@ -251,8 +251,6 @@ const Mutations = {
       }
     }, '{ id, permissions, email }');
 
-    console.log("user", user)
-
     if (!user) {
       throw new Error('This token is either invalid or expired');
     }
