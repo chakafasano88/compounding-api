@@ -62,7 +62,6 @@ const Mutations = {
     }
   },
 
-
   signout(parent, args, ctx, info) {
     ctx.response.clearCookie('token');
     return { message: 'Goodbye!' };
@@ -167,7 +166,6 @@ const Mutations = {
 
   },
 
-
   async createVote(parent, args, ctx, info) {
 
     if (!ctx.request.userId) {
@@ -237,7 +235,6 @@ const Mutations = {
         \n\n
        <a href="${process.env.FRONTEND_URL}/invite?inviteToken=${inviteToken}">Click Here to Reset</a>`,
     };
-
 
     sgMail.send(mailRes);
 
