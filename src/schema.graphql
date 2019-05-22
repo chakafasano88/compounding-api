@@ -37,14 +37,14 @@ type Query {
 }
 
 type Mutation {
-  createPost(description: String!, title: String!, types: String!): Post!
+  createPost(description: String!, title: String!, types: String!, postId: String): Post!
   createComment(postId: ID!, description: String!): Comment
   createVote(postId: ID!): Vote
   deleteVote(where: VoteWhereUniqueInput!): Vote
   requestReset(email: String!): SuccessMessage
   resetPassword(resetToken: String!, password: String!, confirmPassword: String!): User!
   signup(email: String!, confirmPassword: String!, password: String!, firstName: String!, lastName: String!, permissions: String, status: Int): AuthPayload
-  createUser(firstName: String!, lastName: String!, email: String! permissions: String! password: String!, status: Int): User
+  createUser(firstName: String!, lastName: String!, email: String! permissions: String! password: String!, status: Int): User!
   connectUser(firstName: String!, lastName: String!, email: String! permissions: String! password: String!, confirmPassword: String!, status: Int, inviteToken: String!): User
   login(email: String!, password: String!, permissions: String): AuthPayload
   signout: SuccessMessage

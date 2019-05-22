@@ -32,7 +32,7 @@ var models = [
 exports.Prisma = prisma_lib_1.makePrismaClientClass({
   typeDefs,
   models,
-  endpoint: `https://compounding-c4fbfb5f8e.herokuapp.com/compounding-prod/prod`,
+  endpoint: `https://eu1.prisma.sh/matthew-fasano-c62c3d/compounding/devs`,
   secret: `asdhaisdhviaosceoaoui321403hvqe0w`
 });
 exports.prisma = new exports.Prisma();

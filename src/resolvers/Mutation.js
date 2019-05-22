@@ -141,10 +141,17 @@ const Mutations = {
   },
 
   createPost(parent, args, ctx, info) {
-    // const userId = getUserId(ctx)
+   
     if (!ctx.request.userId) {
       throw new Error('You must be logged in!');
     };
+
+    const postId = args.postId;
+    delete args.postId
+
+    if(postId) {
+      return ctx.db.mutation.updatePost({ where: { id: postId }, data: { ...args, types: { set: [args.types] }, } }, info);
+    }
 
     return ctx.db.mutation.createPost({
       data: {
@@ -157,6 +164,7 @@ const Mutations = {
         },
       }
     }, info)
+
   },
 
 
@@ -213,7 +221,7 @@ const Mutations = {
     const inviteToken = (await randomBytesPromiseified(20)).toString('hex');
     const inviteTokenExpiry = Date.now() + 3600000; // 1 hour from now
 
-    const res = await ctx.db.mutation.updateUser({
+    const updatedUser = await ctx.db.mutation.updateUser({
       where: { email: args.email },
       data: { inviteToken, inviteTokenExpiry },
     });
@@ -221,7 +229,7 @@ const Mutations = {
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
     const mailRes = {
-      to: res.email,
+      to: updatedUser.email,
       from: 'support@focusgroup',
       subject: 'FocusLoop Invite',
       text: 'Reset Password',
@@ -233,7 +241,7 @@ const Mutations = {
 
     sgMail.send(mailRes);
 
-    return { message: 'Thanks!' }
+    return updatedUser
   },
 
   async connectUser(parent, args, ctx, info) {
