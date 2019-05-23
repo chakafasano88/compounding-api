@@ -241,6 +241,11 @@ const Mutations = {
     return updatedUser
   },
 
+  async deleteUser(parent, args, ctx, info) {
+    const where = { id: args.userId };
+    return ctx.db.mutation.deleteUser({ where }, info);
+  },
+
   async connectUser(parent, args, ctx, info) {
 
     if (args.password !== args.confirmPassword) {

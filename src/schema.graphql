@@ -45,10 +45,11 @@ type Mutation {
   resetPassword(resetToken: String!, password: String!, confirmPassword: String!): User!
   signup(email: String!, confirmPassword: String!, password: String!, firstName: String!, lastName: String!, permissions: String, status: Int): AuthPayload
   createUser(firstName: String!, lastName: String!, email: String! permissions: String! password: String!, status: Int): User!
+  deleteUser(userId: ID!): User
   connectUser(firstName: String!, lastName: String!, email: String! permissions: String! password: String!, confirmPassword: String!, status: Int, inviteToken: String!): User
   login(email: String!, password: String!, permissions: String): AuthPayload
   signout: SuccessMessage
-  
+ 
 }
 
 type User {
