@@ -190,7 +190,7 @@ const Mutations = {
   async createComment(parent, args, ctx, info) {
 
     if (!ctx.request.userId) {
-      throw new Error(`You must be logged in to do that!`)
+      throw new Error(`You must have an account to do that!`)
     }
 
     return ctx.db.mutation.createComment({
