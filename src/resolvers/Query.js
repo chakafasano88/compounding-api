@@ -46,8 +46,8 @@ const Query = {
     }
     
     const users = await ctx.db.query.users({}, info);
-    console.log("users", users)
-    return users;
+    
+    return users.filter(user => user.id !== ctx.request.userId)
   },
   
   async posts(parent, args, ctx, info) {
