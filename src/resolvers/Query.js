@@ -45,7 +45,9 @@ const Query = {
       throw new Error('You must be logged in!');
     }
     
-    return ctx.db.query.users({}, info);
+    const users = await ctx.db.query.users({}, info);
+    console.log("users", users)
+    return users;
   },
   
   async posts(parent, args, ctx, info) {
