@@ -228,7 +228,7 @@ const Mutations = {
 
     const mailRes = {
       to: updatedUser.email,
-      from: 'support@focusgroup',
+      from: 'FocusLoopSupport@focusloop.nyc',
       subject: 'FocusLoop Invite',
       text: 'Reset Password',
       html: `<strong>Hello ${args.firstName}! You have been invited to be a collaborator of The FocusLoop! Click the link below to get started! Welcome to the team</strong> 
