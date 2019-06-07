@@ -680,6 +680,7 @@ type User {
   lastName: String!
   email: String!
   password: String!
+  profileImage: String
   inviteToken: String
   inviteTokenExpiry: Float
   resetToken: String
@@ -702,6 +703,7 @@ input UserCreateInput {
   lastName: String!
   email: String!
   password: String!
+  profileImage: String
   inviteToken: String
   inviteTokenExpiry: Float
   resetToken: String
@@ -737,6 +739,7 @@ input UserCreateWithoutPostsInput {
   lastName: String!
   email: String!
   password: String!
+  profileImage: String
   inviteToken: String
   inviteTokenExpiry: Float
   resetToken: String
@@ -752,6 +755,7 @@ input UserCreateWithoutVotesInput {
   lastName: String!
   email: String!
   password: String!
+  profileImage: String
   inviteToken: String
   inviteTokenExpiry: Float
   resetToken: String
@@ -777,6 +781,8 @@ enum UserOrderByInput {
   email_DESC
   password_ASC
   password_DESC
+  profileImage_ASC
+  profileImage_DESC
   inviteToken_ASC
   inviteToken_DESC
   inviteTokenExpiry_ASC
@@ -795,6 +801,7 @@ type UserPreviousValues {
   lastName: String!
   email: String!
   password: String!
+  profileImage: String
   inviteToken: String
   inviteTokenExpiry: Float
   resetToken: String
@@ -826,6 +833,7 @@ input UserUpdateDataInput {
   lastName: String
   email: String
   password: String
+  profileImage: String
   inviteToken: String
   inviteTokenExpiry: Float
   resetToken: String
@@ -841,6 +849,7 @@ input UserUpdateInput {
   lastName: String
   email: String
   password: String
+  profileImage: String
   inviteToken: String
   inviteTokenExpiry: Float
   resetToken: String
@@ -856,6 +865,7 @@ input UserUpdateManyMutationInput {
   lastName: String
   email: String
   password: String
+  profileImage: String
   inviteToken: String
   inviteTokenExpiry: Float
   resetToken: String
@@ -896,6 +906,7 @@ input UserUpdateWithoutPostsDataInput {
   lastName: String
   email: String
   password: String
+  profileImage: String
   inviteToken: String
   inviteTokenExpiry: Float
   resetToken: String
@@ -910,6 +921,7 @@ input UserUpdateWithoutVotesDataInput {
   lastName: String
   email: String
   password: String
+  profileImage: String
   inviteToken: String
   inviteTokenExpiry: Float
   resetToken: String
@@ -1005,6 +1017,20 @@ input UserWhereInput {
   password_not_starts_with: String
   password_ends_with: String
   password_not_ends_with: String
+  profileImage: String
+  profileImage_not: String
+  profileImage_in: [String!]
+  profileImage_not_in: [String!]
+  profileImage_lt: String
+  profileImage_lte: String
+  profileImage_gt: String
+  profileImage_gte: String
+  profileImage_contains: String
+  profileImage_not_contains: String
+  profileImage_starts_with: String
+  profileImage_not_starts_with: String
+  profileImage_ends_with: String
+  profileImage_not_ends_with: String
   inviteToken: String
   inviteToken_not: String
   inviteToken_in: [String!]

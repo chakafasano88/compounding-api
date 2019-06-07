@@ -251,6 +251,12 @@ const Mutations = {
     if (args.password !== args.confirmPassword) {
       throw new Error('Your passwords do not match!')
     }
+    
+    const userExists = await ctx.db.query.users({ where: { email: args.email }});
+    
+    if(userExists.length > 0) {
+      throw new Error('A user with that email already exists!')
+    }
 
     delete args.confirmPassword;
 

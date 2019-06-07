@@ -58,6 +58,7 @@ type User {
   lastName: String!
   email: String!
   posts: [Post!]!
+  profileImage: String
   permissions: [Permission!]!
   status: Int
 }

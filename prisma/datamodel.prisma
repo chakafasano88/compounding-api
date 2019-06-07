@@ -29,6 +29,7 @@ type User {
   lastName: String!
   email: String! @unique
   password: String!
+  profileImage: String
   inviteToken: String
   inviteTokenExpiry: Float
   resetToken: String
