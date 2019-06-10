@@ -6,7 +6,6 @@ secret: asdhaisdhviaosceoaoui321403hvqe0w
 # Points to the file that contains your datamodel
 datamodel: datamodel.prisma
 
-# Specifies language & location for the generated Prisma client
-generate:
-  - generator: javascript-client
-    output: ../src/generated/prisma-client
+hooks:
+  post-deploy:
+      - graphql get-schema -p prisma

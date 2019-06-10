@@ -1,9 +1,5 @@
 const { GraphQLServer } = require('graphql-yoga')
 const { prisma } = require('./generated/prisma-client')
-const User = require('./resolvers/User')
-const Post = require('./resolvers/Post')
-const Subscription = require('./resolvers/Subscription')
-const Vote = require('./resolvers/Vote')
 require('dotenv').config({ path: 'variables.env' })
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken')
