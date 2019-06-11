@@ -1,7 +1,8 @@
 # The HTTP endpoint for your Prisma API
-endpoint: https://compounding-c4fbfb5f8e.herokuapp.com/compounding-prod/prod
+endpoint: https://eu1.prisma.sh/matthew-fasano-c62c3d/compounding/dev
 
-secret: asdhaisdhviaosceoaoui321403hvqe0w
+secret: ${env:PRISMA_SECRET}
+# secret: asdhaisdhviaosceoaoui321403hvqe0w
 
 # Points to the file that contains your datamodel
 datamodel: datamodel.prisma
