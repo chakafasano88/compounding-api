@@ -228,15 +228,13 @@ export type PostOrderByInput =
   | "title_ASC"
   | "title_DESC";
 
-export type VoteOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC";
+export type VoteOrderByInput = "id_ASC" | "id_DESC";
 
 export type CommentOrderByInput =
   | "id_ASC"
   | "id_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
   | "description_ASC"
   | "description_DESC";
 
@@ -264,7 +262,11 @@ export type UserOrderByInput =
   | "resetTokenExpiry_ASC"
   | "resetTokenExpiry_DESC"
   | "status_ASC"
-  | "status_DESC";
+  | "status_DESC"
+  | "occupation_ASC"
+  | "occupation_DESC"
+  | "company_ASC"
+  | "company_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
@@ -384,14 +386,6 @@ export interface VoteWhereInput {
   id_not_ends_with?: Maybe<ID_Input>;
   post?: Maybe<PostWhereInput>;
   user?: Maybe<UserWhereInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
   AND?: Maybe<VoteWhereInput[] | VoteWhereInput>;
   OR?: Maybe<VoteWhereInput[] | VoteWhereInput>;
   NOT?: Maybe<VoteWhereInput[] | VoteWhereInput>;
@@ -419,6 +413,14 @@ export interface CommentWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
   description?: Maybe<String>;
   description_not?: Maybe<String>;
   description_in?: Maybe<String[] | String>;
@@ -517,6 +519,8 @@ export interface UserCreateWithoutVotesInput {
   permissions?: Maybe<UserCreatepermissionsInput>;
   posts?: Maybe<PostCreateManyWithoutPostedByInput>;
   status?: Maybe<Int>;
+  occupation?: Maybe<String>;
+  company?: Maybe<String>;
 }
 
 export interface VoteCreateInput {
@@ -594,6 +598,8 @@ export interface UserUpdateWithoutPostsDataInput {
   permissions?: Maybe<UserUpdatepermissionsInput>;
   votes?: Maybe<VoteUpdateManyWithoutUserInput>;
   status?: Maybe<Int>;
+  occupation?: Maybe<String>;
+  company?: Maybe<String>;
 }
 
 export interface VoteUpsertWithWhereUniqueWithoutUserInput {
@@ -777,6 +783,34 @@ export interface UserWhereInput {
   status_lte?: Maybe<Int>;
   status_gt?: Maybe<Int>;
   status_gte?: Maybe<Int>;
+  occupation?: Maybe<String>;
+  occupation_not?: Maybe<String>;
+  occupation_in?: Maybe<String[] | String>;
+  occupation_not_in?: Maybe<String[] | String>;
+  occupation_lt?: Maybe<String>;
+  occupation_lte?: Maybe<String>;
+  occupation_gt?: Maybe<String>;
+  occupation_gte?: Maybe<String>;
+  occupation_contains?: Maybe<String>;
+  occupation_not_contains?: Maybe<String>;
+  occupation_starts_with?: Maybe<String>;
+  occupation_not_starts_with?: Maybe<String>;
+  occupation_ends_with?: Maybe<String>;
+  occupation_not_ends_with?: Maybe<String>;
+  company?: Maybe<String>;
+  company_not?: Maybe<String>;
+  company_in?: Maybe<String[] | String>;
+  company_not_in?: Maybe<String[] | String>;
+  company_lt?: Maybe<String>;
+  company_lte?: Maybe<String>;
+  company_gt?: Maybe<String>;
+  company_gte?: Maybe<String>;
+  company_contains?: Maybe<String>;
+  company_not_contains?: Maybe<String>;
+  company_starts_with?: Maybe<String>;
+  company_not_starts_with?: Maybe<String>;
+  company_ends_with?: Maybe<String>;
+  company_not_ends_with?: Maybe<String>;
   AND?: Maybe<UserWhereInput[] | UserWhereInput>;
   OR?: Maybe<UserWhereInput[] | UserWhereInput>;
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
@@ -807,6 +841,14 @@ export interface CommentScalarWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
   description?: Maybe<String>;
   description_not?: Maybe<String>;
   description_in?: Maybe<String[] | String>;
@@ -840,6 +882,8 @@ export interface UserCreateWithoutPostsInput {
   permissions?: Maybe<UserCreatepermissionsInput>;
   votes?: Maybe<VoteCreateManyWithoutUserInput>;
   status?: Maybe<Int>;
+  occupation?: Maybe<String>;
+  company?: Maybe<String>;
 }
 
 export interface CommentUpsertWithWhereUniqueWithoutPostInput {
@@ -947,6 +991,8 @@ export interface UserUpdateDataInput {
   posts?: Maybe<PostUpdateManyWithoutPostedByInput>;
   votes?: Maybe<VoteUpdateManyWithoutUserInput>;
   status?: Maybe<Int>;
+  occupation?: Maybe<String>;
+  company?: Maybe<String>;
 }
 
 export interface UserUpdateManyMutationInput {
@@ -961,6 +1007,8 @@ export interface UserUpdateManyMutationInput {
   resetTokenExpiry?: Maybe<Float>;
   permissions?: Maybe<UserUpdatepermissionsInput>;
   status?: Maybe<Int>;
+  occupation?: Maybe<String>;
+  company?: Maybe<String>;
 }
 
 export interface PostUpdateManyWithoutPostedByInput {
@@ -1086,6 +1134,8 @@ export interface UserCreateInput {
   posts?: Maybe<PostCreateManyWithoutPostedByInput>;
   votes?: Maybe<VoteCreateManyWithoutUserInput>;
   status?: Maybe<Int>;
+  occupation?: Maybe<String>;
+  company?: Maybe<String>;
 }
 
 export interface UserUpdateWithoutVotesDataInput {
@@ -1101,6 +1151,8 @@ export interface UserUpdateWithoutVotesDataInput {
   permissions?: Maybe<UserUpdatepermissionsInput>;
   posts?: Maybe<PostUpdateManyWithoutPostedByInput>;
   status?: Maybe<Int>;
+  occupation?: Maybe<String>;
+  company?: Maybe<String>;
 }
 
 export interface VoteUpdateInput {
@@ -1150,14 +1202,6 @@ export interface VoteScalarWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
   AND?: Maybe<VoteScalarWhereInput[] | VoteScalarWhereInput>;
   OR?: Maybe<VoteScalarWhereInput[] | VoteScalarWhereInput>;
   NOT?: Maybe<VoteScalarWhereInput[] | VoteScalarWhereInput>;
@@ -1273,6 +1317,8 @@ export interface UserUpdateInput {
   posts?: Maybe<PostUpdateManyWithoutPostedByInput>;
   votes?: Maybe<VoteUpdateManyWithoutUserInput>;
   status?: Maybe<Int>;
+  occupation?: Maybe<String>;
+  company?: Maybe<String>;
 }
 
 export interface CommentCreateWithoutPostInput {
@@ -1296,21 +1342,18 @@ export interface NodeNode {
 
 export interface VotePreviousValues {
   id: ID_Output;
-  createdAt: DateTimeOutput;
 }
 
 export interface VotePreviousValuesPromise
   extends Promise<VotePreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
 }
 
 export interface VotePreviousValuesSubscription
   extends Promise<AsyncIterator<VotePreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
 export interface AggregateComment {
@@ -1342,6 +1385,8 @@ export interface User {
   resetTokenExpiry?: Float;
   permissions: Permission[];
   status?: Int;
+  occupation?: String;
+  company?: String;
 }
 
 export interface UserPromise extends Promise<User>, Fragmentable {
@@ -1375,6 +1420,8 @@ export interface UserPromise extends Promise<User>, Fragmentable {
     last?: Int;
   }) => T;
   status: () => Promise<Int>;
+  occupation: () => Promise<String>;
+  company: () => Promise<String>;
 }
 
 export interface UserSubscription
@@ -1410,6 +1457,8 @@ export interface UserSubscription
     last?: Int;
   }) => T;
   status: () => Promise<AsyncIterator<Int>>;
+  occupation: () => Promise<AsyncIterator<String>>;
+  company: () => Promise<AsyncIterator<String>>;
 }
 
 export interface UserNullablePromise
@@ -1445,6 +1494,8 @@ export interface UserNullablePromise
     last?: Int;
   }) => T;
   status: () => Promise<Int>;
+  occupation: () => Promise<String>;
+  company: () => Promise<String>;
 }
 
 export interface CommentEdge {
@@ -1466,14 +1517,12 @@ export interface CommentEdgeSubscription
 
 export interface Vote {
   id: ID_Output;
-  createdAt: DateTimeOutput;
 }
 
 export interface VotePromise extends Promise<Vote>, Fragmentable {
   id: () => Promise<ID_Output>;
   post: <T = PostPromise>() => T;
   user: <T = UserPromise>() => T;
-  createdAt: () => Promise<DateTimeOutput>;
 }
 
 export interface VoteSubscription
@@ -1482,7 +1531,6 @@ export interface VoteSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   post: <T = PostSubscription>() => T;
   user: <T = UserSubscription>() => T;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
 export interface VoteNullablePromise
@@ -1491,7 +1539,6 @@ export interface VoteNullablePromise
   id: () => Promise<ID_Output>;
   post: <T = PostPromise>() => T;
   user: <T = UserPromise>() => T;
-  createdAt: () => Promise<DateTimeOutput>;
 }
 
 export interface PostConnection {
@@ -1546,6 +1593,77 @@ export interface PostPreviousValuesSubscription
   types: () => Promise<AsyncIterator<PostTypes[]>>;
 }
 
+export interface UserPreviousValues {
+  id: ID_Output;
+  firstName: String;
+  lastName: String;
+  email: String;
+  password: String;
+  profileImage?: String;
+  inviteToken?: String;
+  inviteTokenExpiry?: Float;
+  resetToken?: String;
+  resetTokenExpiry?: Float;
+  permissions: Permission[];
+  status?: Int;
+  occupation?: String;
+  company?: String;
+}
+
+export interface UserPreviousValuesPromise
+  extends Promise<UserPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  firstName: () => Promise<String>;
+  lastName: () => Promise<String>;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
+  profileImage: () => Promise<String>;
+  inviteToken: () => Promise<String>;
+  inviteTokenExpiry: () => Promise<Float>;
+  resetToken: () => Promise<String>;
+  resetTokenExpiry: () => Promise<Float>;
+  permissions: () => Promise<Permission[]>;
+  status: () => Promise<Int>;
+  occupation: () => Promise<String>;
+  company: () => Promise<String>;
+}
+
+export interface UserPreviousValuesSubscription
+  extends Promise<AsyncIterator<UserPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  firstName: () => Promise<AsyncIterator<String>>;
+  lastName: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  profileImage: () => Promise<AsyncIterator<String>>;
+  inviteToken: () => Promise<AsyncIterator<String>>;
+  inviteTokenExpiry: () => Promise<AsyncIterator<Float>>;
+  resetToken: () => Promise<AsyncIterator<String>>;
+  resetTokenExpiry: () => Promise<AsyncIterator<Float>>;
+  permissions: () => Promise<AsyncIterator<Permission[]>>;
+  status: () => Promise<AsyncIterator<Int>>;
+  occupation: () => Promise<AsyncIterator<String>>;
+  company: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateVote {
+  count: Int;
+}
+
+export interface AggregateVotePromise
+  extends Promise<AggregateVote>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateVoteSubscription
+  extends Promise<AsyncIterator<AggregateVote>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
 export interface UserSubscriptionPayload {
   mutation: MutationType;
   node: User;
@@ -1569,119 +1687,6 @@ export interface UserSubscriptionPayloadSubscription
   node: <T = UserSubscription>() => T;
   updatedFields: () => Promise<AsyncIterator<String[]>>;
   previousValues: <T = UserPreviousValuesSubscription>() => T;
-}
-
-export interface AggregateVote {
-  count: Int;
-}
-
-export interface AggregateVotePromise
-  extends Promise<AggregateVote>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateVoteSubscription
-  extends Promise<AsyncIterator<AggregateVote>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface Post {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  description: String;
-  url?: String;
-  title: String;
-  types: PostTypes[];
-}
-
-export interface PostPromise extends Promise<Post>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  description: () => Promise<String>;
-  url: () => Promise<String>;
-  title: () => Promise<String>;
-  postedBy: <T = UserPromise>() => T;
-  votes: <T = FragmentableArray<Vote>>(args?: {
-    where?: VoteWhereInput;
-    orderBy?: VoteOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  comments: <T = FragmentableArray<Comment>>(args?: {
-    where?: CommentWhereInput;
-    orderBy?: CommentOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  types: () => Promise<PostTypes[]>;
-}
-
-export interface PostSubscription
-  extends Promise<AsyncIterator<Post>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  description: () => Promise<AsyncIterator<String>>;
-  url: () => Promise<AsyncIterator<String>>;
-  title: () => Promise<AsyncIterator<String>>;
-  postedBy: <T = UserSubscription>() => T;
-  votes: <T = Promise<AsyncIterator<VoteSubscription>>>(args?: {
-    where?: VoteWhereInput;
-    orderBy?: VoteOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  comments: <T = Promise<AsyncIterator<CommentSubscription>>>(args?: {
-    where?: CommentWhereInput;
-    orderBy?: CommentOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  types: () => Promise<AsyncIterator<PostTypes[]>>;
-}
-
-export interface PostNullablePromise
-  extends Promise<Post | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  description: () => Promise<String>;
-  url: () => Promise<String>;
-  title: () => Promise<String>;
-  postedBy: <T = UserPromise>() => T;
-  votes: <T = FragmentableArray<Vote>>(args?: {
-    where?: VoteWhereInput;
-    orderBy?: VoteOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  comments: <T = FragmentableArray<Comment>>(args?: {
-    where?: CommentWhereInput;
-    orderBy?: CommentOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  types: () => Promise<PostTypes[]>;
 }
 
 export interface AggregateUser {
@@ -1788,11 +1793,13 @@ export interface VoteSubscriptionPayloadSubscription
 
 export interface Comment {
   id: ID_Output;
+  createdAt: DateTimeOutput;
   description: String;
 }
 
 export interface CommentPromise extends Promise<Comment>, Fragmentable {
   id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
   description: () => Promise<String>;
   post: <T = PostPromise>() => T;
   user: <T = UserPromise>() => T;
@@ -1802,6 +1809,7 @@ export interface CommentSubscription
   extends Promise<AsyncIterator<Comment>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   description: () => Promise<AsyncIterator<String>>;
   post: <T = PostSubscription>() => T;
   user: <T = UserSubscription>() => T;
@@ -1811,6 +1819,7 @@ export interface CommentNullablePromise
   extends Promise<Comment | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
   description: () => Promise<String>;
   post: <T = PostPromise>() => T;
   user: <T = UserPromise>() => T;
@@ -1901,6 +1910,7 @@ export interface CommentConnectionSubscription
 
 export interface CommentPreviousValues {
   id: ID_Output;
+  createdAt: DateTimeOutput;
   description: String;
 }
 
@@ -1908,6 +1918,7 @@ export interface CommentPreviousValuesPromise
   extends Promise<CommentPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
   description: () => Promise<String>;
 }
 
@@ -1915,6 +1926,7 @@ export interface CommentPreviousValuesSubscription
   extends Promise<AsyncIterator<CommentPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   description: () => Promise<AsyncIterator<String>>;
 }
 
@@ -1977,53 +1989,101 @@ export interface PostEdgeSubscription
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface UserPreviousValues {
+export interface Post {
   id: ID_Output;
-  firstName: String;
-  lastName: String;
-  email: String;
-  password: String;
-  profileImage?: String;
-  inviteToken?: String;
-  inviteTokenExpiry?: Float;
-  resetToken?: String;
-  resetTokenExpiry?: Float;
-  permissions: Permission[];
-  status?: Int;
+  createdAt: DateTimeOutput;
+  description: String;
+  url?: String;
+  title: String;
+  types: PostTypes[];
 }
 
-export interface UserPreviousValuesPromise
-  extends Promise<UserPreviousValues>,
-    Fragmentable {
+export interface PostPromise extends Promise<Post>, Fragmentable {
   id: () => Promise<ID_Output>;
-  firstName: () => Promise<String>;
-  lastName: () => Promise<String>;
-  email: () => Promise<String>;
-  password: () => Promise<String>;
-  profileImage: () => Promise<String>;
-  inviteToken: () => Promise<String>;
-  inviteTokenExpiry: () => Promise<Float>;
-  resetToken: () => Promise<String>;
-  resetTokenExpiry: () => Promise<Float>;
-  permissions: () => Promise<Permission[]>;
-  status: () => Promise<Int>;
+  createdAt: () => Promise<DateTimeOutput>;
+  description: () => Promise<String>;
+  url: () => Promise<String>;
+  title: () => Promise<String>;
+  postedBy: <T = UserPromise>() => T;
+  votes: <T = FragmentableArray<Vote>>(args?: {
+    where?: VoteWhereInput;
+    orderBy?: VoteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  comments: <T = FragmentableArray<Comment>>(args?: {
+    where?: CommentWhereInput;
+    orderBy?: CommentOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  types: () => Promise<PostTypes[]>;
 }
 
-export interface UserPreviousValuesSubscription
-  extends Promise<AsyncIterator<UserPreviousValues>>,
+export interface PostSubscription
+  extends Promise<AsyncIterator<Post>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  firstName: () => Promise<AsyncIterator<String>>;
-  lastName: () => Promise<AsyncIterator<String>>;
-  email: () => Promise<AsyncIterator<String>>;
-  password: () => Promise<AsyncIterator<String>>;
-  profileImage: () => Promise<AsyncIterator<String>>;
-  inviteToken: () => Promise<AsyncIterator<String>>;
-  inviteTokenExpiry: () => Promise<AsyncIterator<Float>>;
-  resetToken: () => Promise<AsyncIterator<String>>;
-  resetTokenExpiry: () => Promise<AsyncIterator<Float>>;
-  permissions: () => Promise<AsyncIterator<Permission[]>>;
-  status: () => Promise<AsyncIterator<Int>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  description: () => Promise<AsyncIterator<String>>;
+  url: () => Promise<AsyncIterator<String>>;
+  title: () => Promise<AsyncIterator<String>>;
+  postedBy: <T = UserSubscription>() => T;
+  votes: <T = Promise<AsyncIterator<VoteSubscription>>>(args?: {
+    where?: VoteWhereInput;
+    orderBy?: VoteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  comments: <T = Promise<AsyncIterator<CommentSubscription>>>(args?: {
+    where?: CommentWhereInput;
+    orderBy?: CommentOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  types: () => Promise<AsyncIterator<PostTypes[]>>;
+}
+
+export interface PostNullablePromise
+  extends Promise<Post | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  description: () => Promise<String>;
+  url: () => Promise<String>;
+  title: () => Promise<String>;
+  postedBy: <T = UserPromise>() => T;
+  votes: <T = FragmentableArray<Vote>>(args?: {
+    where?: VoteWhereInput;
+    orderBy?: VoteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  comments: <T = FragmentableArray<Comment>>(args?: {
+    where?: CommentWhereInput;
+    orderBy?: CommentOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  types: () => Promise<PostTypes[]>;
 }
 
 export interface BatchPayload {
@@ -2065,11 +2125,6 @@ DateTime scalar output type, which is always a string
 export type DateTimeOutput = string;
 
 /*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
-*/
-export type String = string;
-
-/*
 The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point). 
 */
 export type Float = number;
@@ -2079,6 +2134,11 @@ The `ID` scalar type represents a unique identifier, often used to refetch an ob
 */
 export type ID_Input = string | number;
 export type ID_Output = string;
+
+/*
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+*/
+export type String = string;
 
 /**
  * Model Metadata

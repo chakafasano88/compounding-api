@@ -15,6 +15,12 @@ const Mutations = {
       throw new Error('Your passwords do not match');
     }
 
+    const emailExists = await ctx.db.query.user({ where: { email: args.email } })
+
+    if (emailExists) {
+      throw new Error('A user with that email already exists!');
+    }
+
     delete args.confirmPassword;
     args.status = 1;
 
@@ -99,6 +105,23 @@ const Mutations = {
     sgMail.send(mailRes);
 
     return { message: 'Thanks!' };
+  },
+
+  async updateUser(parent, args, ctx, info) {
+    const password = args.password;
+
+    if(password && password !== args.confirmPassword) {
+      throw new Error('Your passwords do not match!')
+    } 
+
+    delete args.confirmPassword;
+    
+    const updatedUser = await ctx.db.mutation.updateUser({
+      where: { id: ctx.request.userId },
+      data: { ...args },
+    });
+
+    return updatedUser;
   },
 
   async resetPassword(parent, args, ctx, info) {

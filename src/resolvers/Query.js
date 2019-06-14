@@ -35,7 +35,7 @@ const Query = {
     }
 
     const user = await ctx.db.query.user({where: { id: ctx.request.userId }}, info);
-   
+
     return user
   },
 
@@ -62,6 +62,7 @@ const Query = {
     if(!posts) {
       throw new Error('Error getting posts.');
     }
+
     return posts.filter((post, i) => (post.types[0] === args.filter));
   },
   

@@ -25,6 +25,7 @@ type BatchPayload {
 
 type Comment {
   id: ID!
+  createdAt: DateTime!
   description: String!
   post: Post!
   user: User!
@@ -62,12 +63,15 @@ type CommentEdge {
 enum CommentOrderByInput {
   id_ASC
   id_DESC
+  createdAt_ASC
+  createdAt_DESC
   description_ASC
   description_DESC
 }
 
 type CommentPreviousValues {
   id: ID!
+  createdAt: DateTime!
   description: String!
 }
 
@@ -86,6 +90,14 @@ input CommentScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
   description: String
   description_not: String
   description_in: [String!]
@@ -185,6 +197,14 @@ input CommentWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
   description: String
   description_not: String
   description_in: [String!]
@@ -689,6 +709,8 @@ type User {
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
   votes(where: VoteWhereInput, orderBy: VoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Vote!]
   status: Int
+  occupation: String
+  company: String
 }
 
 type UserConnection {
@@ -712,6 +734,8 @@ input UserCreateInput {
   posts: PostCreateManyWithoutPostedByInput
   votes: VoteCreateManyWithoutUserInput
   status: Int
+  occupation: String
+  company: String
 }
 
 input UserCreateOneInput {
@@ -747,6 +771,8 @@ input UserCreateWithoutPostsInput {
   permissions: UserCreatepermissionsInput
   votes: VoteCreateManyWithoutUserInput
   status: Int
+  occupation: String
+  company: String
 }
 
 input UserCreateWithoutVotesInput {
@@ -763,6 +789,8 @@ input UserCreateWithoutVotesInput {
   permissions: UserCreatepermissionsInput
   posts: PostCreateManyWithoutPostedByInput
   status: Int
+  occupation: String
+  company: String
 }
 
 type UserEdge {
@@ -793,6 +821,10 @@ enum UserOrderByInput {
   resetTokenExpiry_DESC
   status_ASC
   status_DESC
+  occupation_ASC
+  occupation_DESC
+  company_ASC
+  company_DESC
 }
 
 type UserPreviousValues {
@@ -808,6 +840,8 @@ type UserPreviousValues {
   resetTokenExpiry: Float
   permissions: [Permission!]!
   status: Int
+  occupation: String
+  company: String
 }
 
 type UserSubscriptionPayload {
@@ -842,6 +876,8 @@ input UserUpdateDataInput {
   posts: PostUpdateManyWithoutPostedByInput
   votes: VoteUpdateManyWithoutUserInput
   status: Int
+  occupation: String
+  company: String
 }
 
 input UserUpdateInput {
@@ -858,6 +894,8 @@ input UserUpdateInput {
   posts: PostUpdateManyWithoutPostedByInput
   votes: VoteUpdateManyWithoutUserInput
   status: Int
+  occupation: String
+  company: String
 }
 
 input UserUpdateManyMutationInput {
@@ -872,6 +910,8 @@ input UserUpdateManyMutationInput {
   resetTokenExpiry: Float
   permissions: UserUpdatepermissionsInput
   status: Int
+  occupation: String
+  company: String
 }
 
 input UserUpdateOneRequiredInput {
@@ -914,6 +954,8 @@ input UserUpdateWithoutPostsDataInput {
   permissions: UserUpdatepermissionsInput
   votes: VoteUpdateManyWithoutUserInput
   status: Int
+  occupation: String
+  company: String
 }
 
 input UserUpdateWithoutVotesDataInput {
@@ -929,6 +971,8 @@ input UserUpdateWithoutVotesDataInput {
   permissions: UserUpdatepermissionsInput
   posts: PostUpdateManyWithoutPostedByInput
   status: Int
+  occupation: String
+  company: String
 }
 
 input UserUpsertNestedInput {
@@ -1089,6 +1133,34 @@ input UserWhereInput {
   status_lte: Int
   status_gt: Int
   status_gte: Int
+  occupation: String
+  occupation_not: String
+  occupation_in: [String!]
+  occupation_not_in: [String!]
+  occupation_lt: String
+  occupation_lte: String
+  occupation_gt: String
+  occupation_gte: String
+  occupation_contains: String
+  occupation_not_contains: String
+  occupation_starts_with: String
+  occupation_not_starts_with: String
+  occupation_ends_with: String
+  occupation_not_ends_with: String
+  company: String
+  company_not: String
+  company_in: [String!]
+  company_not_in: [String!]
+  company_lt: String
+  company_lte: String
+  company_gt: String
+  company_gte: String
+  company_contains: String
+  company_not_contains: String
+  company_starts_with: String
+  company_not_starts_with: String
+  company_ends_with: String
+  company_not_ends_with: String
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
@@ -1103,7 +1175,6 @@ type Vote {
   id: ID!
   post: Post!
   user: User!
-  createdAt: DateTime!
 }
 
 type VoteConnection {
@@ -1146,13 +1217,10 @@ type VoteEdge {
 enum VoteOrderByInput {
   id_ASC
   id_DESC
-  createdAt_ASC
-  createdAt_DESC
 }
 
 type VotePreviousValues {
   id: ID!
-  createdAt: DateTime!
 }
 
 input VoteScalarWhereInput {
@@ -1170,14 +1238,6 @@ input VoteScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
   AND: [VoteScalarWhereInput!]
   OR: [VoteScalarWhereInput!]
   NOT: [VoteScalarWhereInput!]
@@ -1275,14 +1335,6 @@ input VoteWhereInput {
   id_not_ends_with: ID
   post: PostWhereInput
   user: UserWhereInput
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
   AND: [VoteWhereInput!]
   OR: [VoteWhereInput!]
   NOT: [VoteWhereInput!]

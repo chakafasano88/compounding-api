@@ -38,17 +38,19 @@ type User {
   posts: [Post!]!
   votes: [Vote!]
   status: Int
+  occupation: String
+  company: String
 }
 
 type Vote {
   id: ID! @id
   post: Post! @unique
   user: User! @unique
-  createdAt: DateTime! @createdAt
 }
 
 type Comment {
   id: ID! @id
+  createdAt: DateTime! @createdAt
   description: String!
   post: Post! @unique
   user: User! @unique

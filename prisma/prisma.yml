@@ -1,11 +1,15 @@
 # The HTTP endpoint for your Prisma API
 endpoint: https://eu1.prisma.sh/matthew-fasano-c62c3d/compounding/dev
 
-secret: ${env:PRISMA_SECRET}
+secret: asdhaisdhviaosceoaoui321403hvqe0w
 # secret: asdhaisdhviaosceoaoui321403hvqe0w
 
 # Points to the file that contains your datamodel
 datamodel: datamodel.prisma
+
+generate:
+  - generator: javascript-client
+    output: ../src/generated/prisma-client 
 
 hooks:
   post-deploy:

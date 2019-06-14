@@ -47,9 +47,9 @@ type Mutation {
   createUser(firstName: String!, lastName: String!, email: String! permissions: String! password: String!, status: Int): User!
   deleteUser(userId: ID!): User
   connectUser(firstName: String!, lastName: String!, email: String! permissions: String! password: String!, confirmPassword: String!, status: Int, inviteToken: String!): User
+  updateUser(firstName: String, lastName: String, email: String, profileImage: String, password: String, confirmPassword: String, company: String, occupation: String): User
   login(email: String!, password: String!, permissions: String): AuthPayload
   signout: SuccessMessage
- 
 }
 
 type User {
@@ -59,6 +59,8 @@ type User {
   email: String!
   posts: [Post!]!
   profileImage: String
+  company: String
+  occupation: String
   permissions: [Permission!]!
   status: Int
 }
@@ -76,6 +78,7 @@ type AuthPayload {
 type Post {
   id: ID!
   description: String!
+  createdAt: DateTime! 
   url: String
   postedBy: User
   title: String!
@@ -93,6 +96,7 @@ type Vote {
 type Comment {
   id: ID!
   description: String!
+  createdAt: DateTime! 
   post: Post!
   user: User!
 }
