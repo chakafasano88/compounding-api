@@ -277,7 +277,7 @@ const Mutations = {
     
     const userExists = await ctx.db.query.users({ where: { email: args.email }});
     
-    if(userExists.length > 0) {
+    if(userExists.length > 0 && userExists.status === 1) {
       throw new Error('A user with that email already exists!')
     }
 
